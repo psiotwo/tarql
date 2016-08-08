@@ -10,15 +10,15 @@ import org.apache.jena.riot.system.IRIResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.hp.hpl.jena.query.Query;
-import com.hp.hpl.jena.query.QueryException;
-import com.hp.hpl.jena.query.QueryParseException;
-import com.hp.hpl.jena.shared.JenaException;
-import com.hp.hpl.jena.shared.NotFoundException;
-import com.hp.hpl.jena.sparql.lang.SyntaxVarScope;
-import com.hp.hpl.jena.sparql.lang.sparql_11.ParseException;
-import com.hp.hpl.jena.sparql.lang.sparql_11.SPARQLParser11;
-import com.hp.hpl.jena.util.FileManager;
+import org.apache.jena.query.Query;
+import org.apache.jena.query.QueryException;
+import org.apache.jena.query.QueryParseException;
+import org.apache.jena.shared.JenaException;
+import org.apache.jena.shared.NotFoundException;
+import org.apache.jena.sparql.lang.SyntaxVarScope;
+import org.apache.jena.sparql.lang.sparql_11.ParseException;
+import org.apache.jena.sparql.lang.sparql_11.SPARQLParser11;
+import org.apache.jena.util.FileManager;
 
 /**
  * Parses a {@link TarqlQuery} provided as a string or reader.
@@ -102,11 +102,11 @@ public class TarqlParser {
 		SPARQLParser11 parser = new SPARQLParser11(reader) ;
 		try {
 			parseDo(parser);
-		} catch (com.hp.hpl.jena.sparql.lang.sparql_11.ParseException ex) { 
+		} catch (org.apache.jena.sparql.lang.sparql_11.ParseException ex) {
 			throw new QueryParseException(ex.getMessage(),
 					ex.currentToken.beginLine,
 					ex.currentToken.beginColumn);
-		} catch (com.hp.hpl.jena.sparql.lang.sparql_11.TokenMgrError tErr) {
+		} catch (org.apache.jena.sparql.lang.sparql_11.TokenMgrError tErr) {
 			// Last valid token : not the same as token error message - but this should not happen
 			int col = parser.token.endColumn;
 			int line = parser.token.endLine;

@@ -8,7 +8,7 @@ import java.io.StringReader;
 
 import org.junit.Test;
 
-import com.hp.hpl.jena.query.QueryParseException;
+import org.apache.jena.query.QueryParseException;
 
 public class TarqlParserTest {
 

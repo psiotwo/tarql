@@ -12,17 +12,16 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.deri.tarql.CSVOptions.ParseResult;
 
-import arq.cmdline.ArgDecl;
-import arq.cmdline.CmdGeneral;
+import jena.cmd.ArgDecl;
+import jena.cmd.CmdGeneral;
 
-import com.hp.hpl.jena.graph.Triple;
-import com.hp.hpl.jena.query.ResultSetFormatter;
-import com.hp.hpl.jena.shared.NotFoundException;
-import com.hp.hpl.jena.sparql.serializer.FmtTemplate;
-import com.hp.hpl.jena.sparql.serializer.SerializationContext;
-import com.hp.hpl.jena.sparql.util.Utils;
-import com.hp.hpl.jena.util.iterator.ExtendedIterator;
-import com.hp.hpl.jena.util.iterator.NullIterator;
+import org.apache.jena.graph.Triple;
+import org.apache.jena.query.ResultSetFormatter;
+import org.apache.jena.shared.NotFoundException;
+import org.apache.jena.sparql.serializer.FmtTemplate;
+import org.apache.jena.sparql.serializer.SerializationContext;
+import org.apache.jena.util.iterator.ExtendedIterator;
+import org.apache.jena.util.iterator.NullIterator;
 
 /**
  * The <code>tarql</code> CLI command.
@@ -90,10 +89,23 @@ public class tarql extends CmdGeneral {
 		getUsage().addUsage("table.csv", "CSV file to be processed; can be omitted if specified in FROM clause");
 		modVersion.addClass(tarql.class);
 	}
-	
+
+	static public String className(Object obj) {
+		if (obj == null)
+			return "null";
+		return classShortName(obj.getClass());
+	}
+
+	static public String classShortName(Class<?> cls) {
+		String tmp = cls.getName();
+		int i = tmp.lastIndexOf('.');
+		tmp = tmp.substring(i + 1);
+		return tmp;
+	}
+
 	@Override
     protected String getCommandName() {
-		return Utils.className(this);
+		return className(this);
 	}
 	
 	@Override
@@ -104,7 +116,7 @@ public class tarql extends CmdGeneral {
 	@Override
 	protected void processModulesAndArgs() {
 		if (getPositional().isEmpty()) {
-			doHelp();
+			this.printHelp();
 		}
 		queryFile = getPositionalArg(0);
 		for (int i = 1; i < getPositional().size(); i++) {
